@@ -55,8 +55,15 @@ class UserController extends Controller
 
     public function update(User $user, Request $request)
     {
+<<<<<<< HEAD
         $validated = $request->validate([
             'staff_id' => 'unique:users,staff_id,'.$user->id.',id'
+=======
+        $request->validate([
+            'staff_id' => 'unique:users,staff_id,'.$user->id.',id'
+        ], [
+            'staff_id.unique'
+>>>>>>> 065d989fc469613e27113b4f4c389bbee050c3dd
         ]);
 
         # 1
