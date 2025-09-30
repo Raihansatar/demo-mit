@@ -9,7 +9,21 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('user.index');
+        // $users = User::all();
+
+        // $users = User::limit(3)->get();
+
+        $users = User::
+        // where('staff_id', '99999')
+            select('*')
+            // ->where('id', '>', 1)
+            // ->where('id', '<' , 4)
+            ->get();
+
+
+        return view('user.index', [
+            'users' => $users
+        ]);
     }
 
     public function create()
@@ -30,6 +44,39 @@ class UserController extends Controller
         // ]);
 
         // dd($request->all());
+    }
+
+    public function edit(User $user)
+    {
+        return view('user.edit', [
+            'user' => $user
+        ]);
+    }
+
+    public function update(User $user, Request $request)
+    {
+
+        # 1
+        $user->update($request->all());
+
+        # 2
+        // $user->staff_id = $request->staff_id;
+        // $user->save();
+
+        // # 3
+        // $user->update([
+        //     'staff_id' => $request->staff_id
+        // ]);
+
+        return redirect()->route('user.index');
+    }
+
+    public function delete(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $user->delete();
+
+        return redirect()->route('user.index');
     }
 
 }
